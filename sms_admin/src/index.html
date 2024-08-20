@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>SmsAdmin</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+  <app-root></app-root>
+   <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const toggleButtons = document.querySelectorAll('.toggle-button');
+
+      toggleButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const toggleContent = this.nextElementSibling;
+
+          if (toggleContent.style.display === 'block') {
+            slideUp(toggleContent);
+          } else {
+            slideDown(toggleContent);
+          }
+        });
+      });
+
+      function slideDown(element) {
+        element.style.display = 'block';
+        element.style.height = '0';
+        element.style.overflow = 'hidden';
+        element.style.transition = 'height 0.3s ease-in-out';
+        element.style.height = element.scrollHeight + 'px';
+
+        element.addEventListener('transitionend', function handler() {
+          element.style.height = '';
+          element.style.overflow = '';
+          element.removeEventListener('transitionend', handler);
+        });
+      }
+
+      function slideUp(element) {
+        element.style.height = element.scrollHeight + 'px';
+        element.style.overflow = 'hidden';
+
+        setTimeout(() => {
+          element.style.transition = 'height 0.3s ease-in-out';
+          element.style.height = '0';
+
+          element.addEventListener('transitionend', function handler() {
+            element.style.display = 'none';
+            element.style.height = '';
+            element.style.overflow = '';
+            element.removeEventListener('transitionend', handler);
+          });
+        }, 10);
+      }
+    });
+  </script>
+</body>
+</html>
